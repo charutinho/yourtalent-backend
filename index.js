@@ -1,0 +1,18 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+
+// Criação do app
+const app = express();
+
+// Usando bodyparser pra requisições JSON
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+//Rota simples pra testar
+app.get('/', (req, res) => { 
+    res.send('TA OK');
+ });
+
+//Porta do servidor
+app.listen(3000);
