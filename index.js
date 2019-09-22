@@ -9,10 +9,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-//Rota simples pra testar
+/*Rota simples pra testar
 app.get('/', (req, res) => { 
     res.send('TA OK');
  });
+*/
+
+require('./src/controllers/authController')(app);
 
 //Porta do servidor
 app.listen(3000);

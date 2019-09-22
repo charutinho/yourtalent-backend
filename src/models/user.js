@@ -1,4 +1,5 @@
-const moongose = require('mongoose');
+const mongoose = require('../database');
+const bcrypt = require('bcryptjs');
 
 //Schema do mongodb, como se fosse uma tabela MySQL
 const UserSchema = new mongoose.Schema({
@@ -7,7 +8,7 @@ const UserSchema = new mongoose.Schema({
         require: true,
     },
     nasc: {
-        type: Date,
+        type: String,
         require: true,
     },
     sexo: {
@@ -33,6 +34,12 @@ const UserSchema = new mongoose.Schema({
         default: Date.now
     },
 
+});
+
+UserSchema.pre('save', async function(next) {
+    const hash = await bcrypt.hash(this.senha, 15);
+    this.senha = hash;
+    next();
 });
 
 const User = mongoose.model('User', UserSchema);
