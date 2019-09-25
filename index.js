@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 
 require('./src/controllers/authController')(app);
 require('./src/controllers/projectController')(app);
+require('./src/controllers/dataController')(app);
 
 //Porta do servidor
 app.listen(3000);
