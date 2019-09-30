@@ -29,6 +29,17 @@ const UserSchema = new mongoose.Schema({
     nivel:{
         type: Number,
     },
+    estado: {
+        type: String,
+        require: true
+    },
+    esporte: {
+        type: String,
+    },
+    pic: {
+        type: String,
+        data: Buffer
+    },
     createdAt: {
         type: Date,
         default: Date.now
