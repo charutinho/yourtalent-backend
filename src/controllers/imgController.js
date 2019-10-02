@@ -17,7 +17,7 @@ router.post('/uploadimg', multer(multerConfig).single('img'), async (req, res) =
 
         await User.findByIdAndUpdate(idUser, { $set: { pic: imgName } });
 
-        console.log('Sucesso');
+        console.log(imgName);
 
         res.send({
             file
@@ -26,6 +26,25 @@ router.post('/uploadimg', multer(multerConfig).single('img'), async (req, res) =
     }
 });
 
+router.post('/uploadimgcapa', multer(multerConfig).single('img'), async (req, res) => {
+    const file = req.file;
 
+    if (!file) {
+        return res.status(400).send({ error: "Foto não enviada" });
+    } else {
+
+        const imgName = req.file.filename;
+        const idUser = req.headers.iduser;
+
+        await User.findByIdAndUpdate(idUser, { $set: { picCapa: imgName } });
+
+        console.log(imgName);
+
+        res.send({
+            file
+        })
+
+    }
+});
 
 module.exports = app => app.use(router);

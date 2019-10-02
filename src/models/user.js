@@ -40,6 +40,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         data: Buffer
     },
+    picCapa: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now

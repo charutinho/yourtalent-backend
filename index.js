@@ -7,6 +7,7 @@ const app = express();
 // Usando bodyparser pra requisições JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('uploads'));
 
 
 /*Rota simples pra testar
