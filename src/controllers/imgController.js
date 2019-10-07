@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const multerConfig = require('../config/multer');
+const multerConfig = require('../config/multerUser');
 
 const router = express.Router();
 const User = require('../models/user');
@@ -9,7 +9,7 @@ router.post('/uploadimg', multer(multerConfig).single('img'), async (req, res) =
     const file = req.file;
 
     if (!file) {
-        return res.status(400).send({ error: "Foto não enviada" });
+        return res.status(404).send({ error: "Nenhum arquivo selecionado" });
     } else {
 
         const imgName = req.file.filename;

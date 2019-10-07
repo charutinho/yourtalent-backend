@@ -7,7 +7,8 @@ const app = express();
 // Usando bodyparser pra requisições JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('uploads'));
+app.use(express.static('uploads/profile'));
+app.use(express.static('uploads/posts'));
 
 
 /*Rota simples pra testar
@@ -20,6 +21,8 @@ require('./src/controllers/authController')(app);
 require('./src/controllers/projectController')(app);
 require('./src/controllers/dataController')(app);
 require('./src/controllers/imgController')(app);
+require('./src/controllers/postController')(app);
+require('./src/controllers/sportController')(app);
 
 
 //Porta do servidor

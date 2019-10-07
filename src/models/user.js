@@ -2,6 +2,7 @@ const mongoose = require('../database');
 const bcrypt = require('bcryptjs');
 
 //Schema do mongodb, como se fosse uma tabela MySQL
+//Schema do Usuário
 const UserSchema = new mongoose.Schema({
     nome: {
         type: String,
