@@ -1,38 +1,35 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const authConfig = require('../config/auth.json');
 
 const router = express.Router();
 
-function generateToken(params = {}) {
-    return jwt.sign(params, authConfig.secret, {
-        expiresIn: 86400,
-    });
-}
 
 router.post('/register', async (req, res) => {
-    try {
+    try {  
+
+        console.log(req.body);
 
         const { email } = req.body;
         if (await User.findOne({ email })) {
+            console.log("E-mail já cadastrado");
             return res.status(400).send({ error: "O e-mail já está cadastrado" });
         }
 
         const user = await User.create(req.body);
+        console.log("Cadastrado com sucesso!");
 
         user.senha = undefined;
 
         return res.send({
             user,
-            token: generateToken({ id: user.id })
         });
     } catch (err) {
         return res.status(400).send({ error: "Algo deu errado no registro, tente novamente" });
     }
 });
+
 
 router.post('/authenticate', async (req, res) => {
     const { email, senha } = req.body;
@@ -49,7 +46,6 @@ router.post('/authenticate', async (req, res) => {
 
     res.send({
         user,
-        token: generateToken({ id: user.id }),
         login: 1
     });
 });

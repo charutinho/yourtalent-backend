@@ -2,15 +2,22 @@ const mongoose = require('../database');
 
 //Schema dos posts
 const PostSchema = new mongoose.Schema({
-    idUsuario: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
-    },
     descricao: {
         type: String,
-        required: true,
+        required: true
     },
-    conteudo: {
-        type: String
+    conteudoPost: {
+        type: String,
+    },
+
+    autor: {
+        idUsuario:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        nomeUsuario: {
+            type: String
+        }
     },
     createdAt: {
         type: Date,

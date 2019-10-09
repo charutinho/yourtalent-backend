@@ -26,5 +26,5 @@ require('./src/controllers/sportController')(app);
 
 
 //Porta do servidor
-var porta = process.env.PORT || 3000;
-app.listen(porta);
+app.listen(3000);
+console.log('Servidor rodando na porta 3000')

@@ -39,4 +39,10 @@ router.get('/listaresports', async (req, res) => {
     });
 });
 
+router.get('/listartodos', async (req, res) => {
+    Sport.find({}).then(function (Listar){
+        res.send(Listar);
+    });
+});
+
 module.exports = app => app.use('/esportes', router);
