@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         require: true,
-        unique: true,
         lowercase: true,
     },
     senha: {
@@ -27,33 +26,47 @@ const UserSchema = new mongoose.Schema({
         require: true,
         select: false,
     },
-    nivel:{
-        type: Number,
+    descricao: {
+        type: String,
+    },
+    pais: {
+        type: String,
+        require: true
     },
     estado: {
         type: String,
         require: true
     },
+    cidade: {
+        type: String,
+        require: true
+    },
+    fotoPerfil: {
+        type: String,
+    },
+    fotoCapa: {
+        type: String,
+    },
     esporte: {
         type: String,
     },
-    pic: {
-        type: String,
-        data: Buffer
-    },
-    picCapa: {
-        type: String
+    nivel: {
+        type: Number
     },
     createdAt: {
         type: Date,
         default: Date.now
     },
-
 });
 
-UserSchema.pre('save', async function(next) {
+
+UserSchema.pre('save', async function (next) {
     const hash = await bcrypt.hash(this.senha, 15);
     this.senha = hash;
+
+    if (this.esporte == ''){
+        this.esporte = "Futebol";
+    }
     next();
 });
 
