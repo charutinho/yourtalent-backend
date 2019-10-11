@@ -15,7 +15,7 @@ router.post('/uploadimg', multer(multerConfig).single('img'), async (req, res) =
         const imgName = req.file.filename;
         const idUser = req.headers.iduser;
 
-        await User.findByIdAndUpdate(idUser, { $set: { pic: imgName } });
+        await User.findByIdAndUpdate(idUser, { $set: { fotoPerfil: imgName } });
 
         console.log(imgName);
 
@@ -36,7 +36,7 @@ router.post('/uploadimgcapa', multer(multerConfig).single('img'), async (req, re
         const imgName = req.file.filename;
         const idUser = req.headers.iduser;
 
-        await User.findByIdAndUpdate(idUser, { $set: { picCapa: imgName } });
+        await User.findByIdAndUpdate(idUser, { $set: { fotoCapa: imgName } });
 
         console.log(imgName);
 

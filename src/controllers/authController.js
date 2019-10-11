@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.post('/register', async (req, res) => {
-    try {  
+    try {
 
         console.log(req.body);
 

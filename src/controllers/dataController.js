@@ -5,10 +5,11 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.post('/data', async (req, res) => {
-    const { _id } = req.body;
+router.get('/data/:id', async (req, res) => {
+    
+    const idUser = req.params.id;
 
-    const user = await User.findOne({ _id });
+    const user = await User.findOne({ _id: idUser });
 
     if (!user)
         return res.status(404).send({ error: "Usuário não encontrado" });
@@ -24,7 +25,7 @@ router.post('/listData', async (req, res) => {
 
     const { nivel } = req.body;
 
-    const user = await User.find({ nivel: 3 });    
+    const user = await User.find({ nivel: 1 });    
 
     user.senha = undefined;
 

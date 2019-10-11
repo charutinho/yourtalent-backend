@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
     descricao: {
         type: String,
     },
-    pais: {
+    cep: {
         type: String,
         require: true
     },
@@ -66,6 +66,9 @@ UserSchema.pre('save', async function (next) {
 
     if (this.esporte == ''){
         this.esporte = "Futebol";
+    }
+    if (this.pais == null){
+        this.pais = "Brasil";
     }
     next();
 });
