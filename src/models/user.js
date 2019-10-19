@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
         require: true,
         select: false,
     },
-    descricao: {
+    desc: {
         type: String,
     },
     cep: {

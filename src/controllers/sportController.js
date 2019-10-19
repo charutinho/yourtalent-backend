@@ -2,45 +2,58 @@ const express = require('express');
 const router = express.Router();
 const Sport = require('../models/sport');
 
-// Executar isso somente uma vez para inserir os esportes no mongodb
-router.post('/criaresportes', async (req, res) => {
+router.get('/criar/:categoria/:nomeEsporte', async (req, res) => {
 
-    const esportes = [
-        //Esportes
-        { nomeEsporte: "Futebol", categoria: "Esporte" },
-        { nomeEsporte: "Basquete", categoria: "Esporte" },
-        //eSports
-        { nomeEsporte: "CS:GO", categoria: "eSport" },
-        { nomeEsporte: "LoL", categoria: "eSport" }];
+    var categoria = req.params.categoria;
+    // console.log(categoria);
+    var nome = req.params.nomeEsporte;
+    //console.log(nome);
 
-    await Sport.collection.insert(esportes, function (err, docs) {
-        if (err) {
-            return console.error(err);
-        } else {
-            res.send({
-                message: "Esportes inseridos com sucesso!"
-            })
-        }
-    });
-});
+    // console.log(req.params);
+
+    if (await Sport.findOne({ nomeEsporte: nome })) {
+        console.log("Esporte já cadastrado");
+        return res.send({ error: "Este esporte já existe" });
+    }
+
+    switch (categoria) {
+        case 'esporte':
+            console.log("Esporte");
+            break;
+        case 'esport':
+            console.log("eSport");
+            break;
+        default:
+            return res.render({ message: "Esta categoria não existe" })
+    }
+
+    await Sport.create( req.params );
+
+    res.send({
+        message: "Esporte criado com sucesso",
+        nome,
+        categoria
+    })
+    
+})
 
 
 //Listar esportes
 router.get('/listaresportes', async (req, res) => {
-    Sport.find({ categoria: "Esporte" }).then(function (esportesLista){
+    Sport.find({ categoria: "esporte" }).then(function (esportesLista) {
         res.send(esportesLista);
     });
 });
 
 //Listar eSports
 router.get('/listaresports', async (req, res) => {
-    Sport.find({ categoria: "eSport" }).then(function (eSportLista){
+    Sport.find({ categoria: "esport" }).then(function (eSportLista) {
         res.send(eSportLista);
     });
 });
 
 router.get('/listartodos', async (req, res) => {
-    Sport.find({}).then(function (Listar){
+    Sport.find({}).then(function (Listar) {
         res.send(Listar);
     });
 });

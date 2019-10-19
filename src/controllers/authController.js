@@ -5,6 +5,17 @@ const User = require('../models/user');
 
 const router = express.Router();
 
+router.post('/verificaremail', async(req,res) => {
+    console.log(req.body);
+    const { email } = req.body;
+
+    if(await User.findOne({ email })){
+        console.log("E-mail já cadastrado");
+        return res.send({ message: 'O e-mail já está cadastrado' })
+    } else {
+        return res.send({ message: 'O e-mail esta disponível' })
+    }
+})
 
 router.post('/register', async (req, res) => {
     try {

@@ -11,7 +11,7 @@ const PostSchema = new mongoose.Schema({
     },
 
     autor: {
-        idUsuario:{
+        idUsuario: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
@@ -19,6 +19,11 @@ const PostSchema = new mongoose.Schema({
             type: String
         }
     },
+
+    categoria: {
+        type: String 
+    },
+
     createdAt: {
         type: Date,
         default: Date.now

@@ -32,6 +32,25 @@ router.post('/listData', async (req, res) => {
     res.send({
         user,
     });
-})
+});
+
+router.post('/updateData', async (req, res) => {
+    
+    const id = req.body.id;
+    const nome = req.body.nome;
+
+    try {
+        await User.findByIdAndUpdate(id, { $set: req.body });
+        return res.send({
+            message: `Usuário ${nome} atualizado com sucesso!`
+        })
+    } catch (err){
+        if(err){
+            return res.status(400).send({ error: 'Algo de errado ao atualizar as informações' })
+        }
+    }
+
+});
+
 
 module.exports = app => app.use(router);

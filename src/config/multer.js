@@ -28,7 +28,7 @@ module.exports = {
             "image/jpeg",
             "image/jpg",
             "image/png",
-            "image/gif"
+            "image/gif",
         ];
 
         if (allowedMimes.includes(file.mimetype)) {
