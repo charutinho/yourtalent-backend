@@ -8,9 +8,9 @@ const User = require('../models/user');
 
 
 router.post('/novopost', multer(multerConfig).single('img'), async (req, res) => {
-    console.log(req.file);
 
-    const file = req.file;
+    const user = await User.findById(req.headers.iduser).select('+senha');
+
     const desc = req.headers.desc;
     var categoria = req.headers.categoria;
     const imgName = req.file.filename;
@@ -19,16 +19,20 @@ router.post('/novopost', multer(multerConfig).single('img'), async (req, res) =>
         categoria = "futebol"
     }
 
-    console.log(categoria);
+    const file = req.file;
 
     var autor = {
-        idUsuario: req.headers.iduser,
-        nomeUsuario: req.headers.nomeusuario
+        idUsuario: user._id,
+        nomeUsuario: user.nome,
+        fotoPerfil: user.fotoPerfil
     }
 
     try {
         if (!file) {
-            return res.status(404).send({ error: "Nenhum arquivo selecionado" });
+            return res.status(404).send({
+                error: "Nenhum arquivo selecionado"
+            });
+
         } else {
             try {
                 await Post.create({ descricao: desc, conteudoPost: imgName, autor: autor, categoria: categoria });

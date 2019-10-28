@@ -6,11 +6,9 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/verificaremail', async(req,res) => {
-    console.log(req.body);
     const { email } = req.body;
 
     if(await User.findOne({ email })){
-        console.log("E-mail já cadastrado");
         return res.send({ message: 'O e-mail já está cadastrado' })
     } else {
         return res.send({ message: 'O e-mail esta disponível' })
@@ -19,17 +17,7 @@ router.post('/verificaremail', async(req,res) => {
 
 router.post('/register', async (req, res) => {
     try {
-
-        console.log(req.body);
-
-        const { email } = req.body;
-        if (await User.findOne({ email })) {
-            console.log("E-mail já cadastrado");
-            return res.status(400).send({ error: "O e-mail já está cadastrado" });
-        }
-
         const user = await User.create(req.body);
-        console.log("Cadastrado com sucesso!");
 
         user.senha = undefined;
 
@@ -40,7 +28,6 @@ router.post('/register', async (req, res) => {
         return res.status(400).send({ error: "Algo deu errado no registro, tente novamente" });
     }
 });
-
 
 router.post('/authenticate', async (req, res) => {
     const { email, senha } = req.body;
