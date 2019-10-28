@@ -26,9 +26,11 @@ const UserSchema = new mongoose.Schema({
         require: true,
         select: false,
     },
+
     desc: {
         type: String,
     },
+
     cep: {
         type: String,
         require: true
@@ -41,18 +43,50 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+
     fotoPerfil: {
         type: String,
     },
     fotoCapa: {
         type: String,
     },
+
     esporte: {
         type: String,
     },
+
     nivel: {
         type: Number
     },
+
+    //Dados Olheiro
+    tipo: {
+        type: String
+    },
+    empresa: {
+        type: String
+    },
+    tempo: {
+        type: String
+    },
+
+    //Dados bancários
+    cpf: {
+        type: String
+    },
+    cardNumber: {
+        type: String
+    },
+    cardNome: {
+        type: String
+    },
+    cardValidade: {
+        type: String
+    },
+    cardCVV: {
+        type: String
+    },
+
     createdAt: {
         type: Date,
         default: Date.now
