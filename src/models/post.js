@@ -10,21 +10,10 @@ const PostSchema = new mongoose.Schema({
         type: String,
     },
 
-    autor: {
-        idUsuario: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        nomeUsuario: {
-            type: String
-        },
-        fotoPerfil: {
-            type: String
-        }
-    },
+    autor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
     categoria: {
-        type: String 
+        type: String,
     },
 
     createdAt: {
