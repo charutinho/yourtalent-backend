@@ -9,10 +9,9 @@ const User = require('../models/user');
 
 router.post('/novopost', multer(multerConfig).single('img'), async (req, res) => {
 
-    const user = await User.findById(req.headers.iduser).select('+senha');
-
     const desc = req.headers.desc;
     var categoria = req.headers.categoria;
+    const id = req.headers.iduser;
     const imgName = req.file.filename;
 
     if (categoria == '') {
@@ -20,12 +19,6 @@ router.post('/novopost', multer(multerConfig).single('img'), async (req, res) =>
     }
 
     const file = req.file;
-
-    var autor = {
-        idUsuario: user._id,
-        nomeUsuario: user.nome,
-        fotoPerfil: user.fotoPerfil
-    }
 
     try {
         if (!file) {
@@ -35,12 +28,17 @@ router.post('/novopost', multer(multerConfig).single('img'), async (req, res) =>
 
         } else {
             try {
-                await Post.create({ descricao: desc, conteudoPost: imgName, autor: autor, categoria: categoria });
 
-                res.send({
-                    message: "Post criado com sucesso",
-                    Post
+                const usuario = await User.findById(id);
+
+                const novoPost = new Post({
+                    descricao: desc,
+                    conteudoPost: imgName,
+                    autor: usuario._id,
+                    categoria: categoria
                 });
+
+                return novoPost.save();
 
             } catch (err) {
                 return res.status(400).send({ error: "Algo deu errado" });
@@ -53,19 +51,37 @@ router.post('/novopost', multer(multerConfig).single('img'), async (req, res) =>
 
 router.get('/listarposts/:nomeesporte', async (req, res) => {
 
-    const nomeesporte = req.params.nomeesporte;
-
-    Post.find({ categoria: nomeesporte }).sort([['createdAt', 'descending']]).then(function (posts) {
-        res.send(posts);
-    });
-
+    await Post.find({ categoria: req.params.nomeesporte })
+        .sort([['createdAt', 'descending']])
+        .populate('autor', 'nome fotoPerfil')
+        .exec()
+        .then(post => {
+            if (!post) {
+                return res.status(404).json({
+                    message: "Este post não existe"
+                });
+            }
+            res.send({
+                post
+            });
+        })
 });
 
 router.get('/listarposts/user/:id', async (req, res) => {
-    const id = req.params.id;
-    Post.find({ 'autor.idUsuario': id }).sort([['createdAt', 'descending']]).then(function (posts) {
-        res.send(posts);
-    })
-})
+    await Post.find({ autor : req.params.id })
+        .sort([['createdAt', 'descending']])
+        .populate('autor', 'nome fotoPerfil')
+        .exec()
+        .then(post => {
+            if (!post) {
+                return res.status(404).json({
+                    message: "Este post não existe"
+                });
+            }
+            res.send({
+                post
+            });
+        })
+});
 
 module.exports = app => app.use(router);
