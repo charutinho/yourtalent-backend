@@ -25,10 +25,16 @@ module.exports = {
     },
     fileFilter: (req, file, cb) => {
         const allowedMimes = [
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-            "image/gif",
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'video/mp4',
+            'video/x-msvideo',
+            'video/mpeg',
+            'video/ogg',
+            'video/webm'
         ];
 
         if (allowedMimes.includes(file.mimetype)) {
