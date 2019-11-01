@@ -35,6 +35,8 @@ router.post('/listData', async (req, res) => {
 });
 
 router.post('/updateData', async (req, res) => {
+
+    console.log(req.body);
     
     const id = req.body.id;
     const nome = req.body.nome;
