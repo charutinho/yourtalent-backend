@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Sport = require('../models/sport');
+const User = require('../models/user');
 
 router.get('/criar/:categoria/:nomeEsporte', async (req, res) => {
 
@@ -27,16 +28,29 @@ router.get('/criar/:categoria/:nomeEsporte', async (req, res) => {
             return res.render({ message: "Esta categoria não existe" })
     }
 
-    await Sport.create( req.params );
+    await Sport.create(req.params);
 
     res.send({
         message: "Esporte criado com sucesso",
         nome,
         categoria
     })
-    
+
 })
 
+//Define esporte favorito
+router.get('/favesporte/:esporte/:id', async (req, res) => {
+    const esporteFeed = req.params.esporte;
+    await User.findByIdAndUpdate(req.params.id, { $set: { esporteFeed } });
+    return res.send( esporteFeed );
+})
+
+router.get('/getfavesporte/:id', async (req, res) => {
+    const esporte = await User.find({ _id: req.params.id })
+    .select('-_id esporteFeed')
+    console.log(esporte);
+    return res.send({ esporte });
+})
 
 //Listar esportes
 router.get('/listaresportes', async (req, res) => {

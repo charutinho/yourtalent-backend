@@ -31,6 +31,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
     },
 
+    //Localização
     cep: {
         type: String,
         require: true
@@ -44,6 +45,7 @@ const UserSchema = new mongoose.Schema({
         require: true
     },
 
+    //Foto
     fotoPerfil: {
         type: String,
     },
@@ -51,8 +53,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
     },
 
+    //Esporte
     esporte: {
         type: String,
+    },
+    esporteFeed: {
+        type: String
     },
 
     nivel: {
