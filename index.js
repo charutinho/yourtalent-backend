@@ -23,7 +23,7 @@ require('./src/controllers/dataController')(app);
 require('./src/controllers/imgController')(app);
 require('./src/controllers/postController')(app);
 require('./src/controllers/sportController')(app);
-
+require('./src/controllers/campController')(app);
 
 //Porta do servidor
 app.listen(3000);

@@ -9,7 +9,7 @@ router.post('/verificaremail', async(req,res) => {
     const { email } = req.body;
 
     if(await User.findOne({ email })){
-        return res.send({ message: 'O e-mail já está cadastrado' })
+        return res.send({ error: 'O e-mail já está cadastrado' })
     } else {
         return res.send({ message: 'O e-mail esta disponível' })
     }

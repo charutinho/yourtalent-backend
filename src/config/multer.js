@@ -9,12 +9,12 @@ module.exports = {
             cb(null, path.resolve(__dirname, '..', '..', 'uploads' , 'posts'));
         },
         filename: (req, file, cb) => {
-            crypto.randomBytes(16, (err, hash) => {
+            crypto.randomBytes(16, async(err, hash) => {
                 if (err) cb(err);
 
-                let extArray = file.mimetype.split("/");
-                let extension = extArray[extArray.length - 1];
-                const fileName = `${hash.toString("hex")}.${extension}`;
+                let extArray = await file.mimetype.split("/");
+                let extension = await extArray[extArray.length - 1];
+                const fileName = await `${hash.toString("hex")}.${extension}`;
 
                 cb(null, fileName);
             });
@@ -23,12 +23,18 @@ module.exports = {
     limits: {
         fileSize: 5 * 1024 * 1024
     },
-    fileFilter: (req, file, cb) => {
+    fileFilter: async (req, file, cb) => {
         const allowedMimes = [
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-            "image/gif",
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'video/mp4',
+            'video/x-msvideo',
+            'video/mpeg',
+            'video/ogg',
+            'video/webm'
         ];
 
         if (allowedMimes.includes(file.mimetype)) {
