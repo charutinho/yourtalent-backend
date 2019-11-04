@@ -60,6 +60,9 @@ const UserSchema = new mongoose.Schema({
     esporteFeed: {
         type: String
     },
+    esportePosicao: {
+        type: String
+    },
 
     nivel: {
         type: Number
