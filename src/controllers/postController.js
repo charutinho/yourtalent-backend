@@ -10,7 +10,7 @@ const User = require('../models/user');
 router.post('/novopost', multer(multerConfig).single('img'), async (req, res) => {
 
     console.log(req.file.mimetype);
-   
+
     const desc = req.headers.desc;
     var categoria = req.headers.categoria;
     const id = req.headers.iduser;
@@ -78,5 +78,43 @@ router.get('/listarposts/user/:id', async (req, res) => {
             });
         })
 });
+
+router.post('/listarposts/especificos', async (req, res) => {
+    const posicao = req.body.posicao;
+    const estado = req.body.estado;
+    const sexo = req.body.sexo;
+
+    console.log(posicao, estado, sexo)
+
+    await User.find({ nivel: 1, esportePosicao: posicao, sexo: sexo, estado: estado })
+        .sort([['createdAt', 'descending']])
+        .select('_id')
+        .exec()
+        .then(user => {
+            if (user == '') {
+                console.log('Nenhum atleta encontrado');
+                return res.send({ message: 'Nenhum atleta encontrado' })
+            }
+            console.log(user);
+            return res.send({ user })
+        })
+});
+
+router.post('/listarposts/atleta', async (req, res) => {
+    await Post.find({ autor: req.body.ids })
+        .sort([['createdAt', 'descending']])
+        .populate('autor')
+        .exec()
+        .then(post => {
+            if (!post) {
+                return res.status(404).json({
+                    message: "Este post não existe"
+                });
+            }
+            res.send({
+                post
+            });
+        })
+})
 
 module.exports = app => app.use(router);
