@@ -24,6 +24,7 @@ require('./src/controllers/imgController')(app);
 require('./src/controllers/postController')(app);
 require('./src/controllers/sportController')(app);
 require('./src/controllers/campController')(app);
+require('./src/controllers/chatController')(app);
 
 //Porta do servidor
 app.listen(3000);
