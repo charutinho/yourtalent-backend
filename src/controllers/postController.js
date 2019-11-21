@@ -20,7 +20,7 @@ router.post('/novopost', multer(multerConfig).single('img'), async (req, res) =>
     console.log(ext[0])
 
     if (categoria == '') {
-        categoria = "futebol"
+        categoria = "Futebol"
     }
 
     try {
@@ -44,9 +44,13 @@ router.post('/novopost', multer(multerConfig).single('img'), async (req, res) =>
     }
 });
 
-router.get('/listarposts/:nomeesporte', async (req, res) => {
+router.post('/listarposts', async (req, res) => {
 
-    await Post.find({ categoria: req.params.nomeesporte })
+    console.log(req.body);
+
+    const esporte = req.body.esporte;
+
+    await Post.find({ categoria: esporte })
         .sort([['createdAt', 'descending']])
         .populate('autor', 'nome fotoPerfil')
         .exec()
