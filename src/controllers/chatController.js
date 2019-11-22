@@ -14,7 +14,7 @@ router.post('/chat', async (req, res) => {
 
     const temChat = await Chat.find({ autor, destinatario })
     if (temChat == '') {
-        if(msg == ''){
+        if (msg == '') {
             return;
         }
         const idConversa = await Chat.create({ autor, destinatario });
@@ -27,7 +27,7 @@ router.post('/chat', async (req, res) => {
         return res.send({ message: 'Conversa criada e mensagem enviada!' })
 
     } else {
-        if(msg == ''){
+        if (msg == '') {
             return;
         }
         if (nivel == 1) {
@@ -37,7 +37,7 @@ router.post('/chat', async (req, res) => {
         }
         const idConversa = await Chat.find({ autor, destinatario })
         const idConversaChat = await idConversa[0]._id
-        await Message.create({ msg, autor:autorNivel, idConversa: idConversaChat })
+        await Message.create({ msg, autor: autorNivel, idConversa: idConversaChat })
         return res.send({ message: 'Mensagem enviada' })
     }
 })

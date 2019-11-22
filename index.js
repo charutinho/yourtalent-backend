@@ -19,12 +19,20 @@ app.engine("ejs", engines.ejs);
 app.set('views', path.join(__dirname, './src/views'));
 app.set("view engine", "ejs");
 
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
-/*Rota simples pra testar
-app.get('/', (req, res) => { 
-    res.send('TA OK');
- });
-*/
+io.on('connection', function (socket) {
+    console.log('Usuário conectado')
+    socket.on('chat message', msg => {
+        if (msg == 'attmsg'){
+            io.emit('chat message', 'naoatt')
+        }
+        if (msg == 'envioumsg'){
+            io.emit('chat message', 'getmsg')
+        }
+    })
+});
 
 require('./src/controllers/authController')(app);
 require('./src/controllers/projectController')(app);
@@ -37,5 +45,6 @@ require('./src/controllers/chatController')(app);
 require('./src/controllers/pagarController')(app);
 
 //Porta do servidor
-app.listen(process.env.PORT || 3000);
+// app.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 3000);
 console.log('Servidor rodando na porta 3000')
