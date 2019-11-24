@@ -1,7 +1,8 @@
 const express = require('express');
 
-
 const User = require('../models/user');
+const Post = require('../models/post');
+const Camp = require('../models/camp');
 
 const router = express.Router();
 
@@ -53,6 +54,12 @@ router.post('/updateData', async (req, res) => {
     }
 
 });
+
+router.get('/deleteuser/:id', async(req, res) => {
+    await Post.deleteMany({ autor: req.params.id });
+    await Camp.deleteMany({ idParticipante: req.params.id })
+    await User.findByIdAndDelete(req.params.id);
+})
 
 
 module.exports = app => app.use(router);
