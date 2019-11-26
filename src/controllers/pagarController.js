@@ -26,7 +26,7 @@ router.get('/checkout/:id/:email', async (req, res) => {
                 description: 'Premium para olheiro YourTalent',
                 quantity: 1,
                 currency_id: 'BRL',
-                unit_price: 15
+                unit_price: 14.99
             }
         ],
         payer: {
