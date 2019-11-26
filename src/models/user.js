@@ -79,21 +79,8 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
 
-    //Dados bancários
-    cpf: {
-        type: String
-    },
-    cardNumber: {
-        type: String
-    },
-    cardNome: {
-        type: String
-    },
-    cardValidade: {
-        type: String
-    },
-    cardCVV: {
-        type: String
+    statusUser: {
+        type: Number
     },
 
     createdAt: {
