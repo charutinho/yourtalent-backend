@@ -5,10 +5,10 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.post('/verificaremail', async(req,res) => {
+router.post('/verificaremail', async (req, res) => {
     const { email } = req.body;
 
-    if(await User.findOne({ email })){
+    if (await User.findOne({ email })) {
         return res.send({ error: 'O e-mail já está cadastrado' })
     } else {
         return res.send({ message: 'O e-mail esta disponível' })
@@ -31,6 +31,11 @@ router.post('/register', async (req, res) => {
 
 router.post('/authenticate', async (req, res) => {
     const { email, senha } = req.body;
+
+    const banido = await User.findOne({ email }).select('statusUser');
+    if (banido.statusUser == 1) {
+        return res.send({ message: 'banido' })
+    }
 
     const user = await User.findOne({ email }).select('+senha');
 
