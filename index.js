@@ -44,6 +44,7 @@ require('./src/controllers/campController')(app);
 require('./src/controllers/chatController')(app);
 require('./src/controllers/pagarController')(app);
 require('./src/controllers/emailController')(app);
+require('./src/controllers/denunciaController')(app);
 
 //Porta do servidor
 // app.listen(process.env.PORT || 3000);
