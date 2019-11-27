@@ -8,46 +8,34 @@ const User = require('../models/user');
 
 
 router.post('/novopost', multer(multerConfig).single('img'), async (req, res) => {
-
-    console.log(req.file.mimetype);
-
-    const desc = req.headers.desc;
     var categoria = req.headers.categoria;
     const id = req.headers.iduser;
     const imgName = req.file.filename;
-
     const ext = req.file.mimetype.split('/');
-    console.log(ext[0])
-
-    if (categoria == '') {
-        categoria = "Futebol"
-    }
-
     try {
-
         const usuario = await User.findById(id);
-
         const novoPost = await new Post({
-            descricao: desc,
+            descricao: ' ',
             conteudoPost: imgName,
             autor: usuario._id,
             categoria: categoria,
             tipo: ext[0]
         });
-
-        console.log('Post criado com sucesso!');
-        return novoPost.save().send({ message: 'Salvo com sucesso!' }); //Manda um erro bolado porém funciona perfeitamente
-
+        await novoPost.save();
+        return res.send({ message: novoPost._id })
     } catch (err) {
-        console.log('Erro ao criar post', err);
         return res.status(400).send({ error: "Algo deu errado" });
     }
 });
 
+router.post('/novopostdesc', async (req, res) => {
+    const desc = req.body.desc;
+    const idPost = req.body.idPost;
+    await Post.findByIdAndUpdate(idPost, { $set: { descricao: desc } })
+    return res.send({ message: 'Post criado com sucesso!' })
+})
+
 router.post('/listarposts', async (req, res) => {
-
-    console.log(req.body);
-
     const esporte = req.body.esporte;
 
     await Post.find({ categoria: esporte })

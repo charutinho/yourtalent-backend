@@ -20,6 +20,10 @@ const PostSchema = new mongoose.Schema({
         type: String
     },
 
+    olheiro: {
+        type: Boolean
+    },
+
     createdAt: {
         type: Date,
         default: Date.now

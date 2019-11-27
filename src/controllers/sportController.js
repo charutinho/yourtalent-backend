@@ -48,7 +48,6 @@ router.get('/favesporte/:esporte/:id', async (req, res) => {
 router.get('/getfavesporte/:id', async (req, res) => {
     const esporte = await User.find({ _id: req.params.id })
     .select('-_id esporteFeed')
-    console.log(esporte);
     return res.send({ esporte });
 })
 
