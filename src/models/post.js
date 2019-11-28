@@ -24,6 +24,18 @@ const PostSchema = new mongoose.Schema({
         type: Boolean
     },
 
+    width: {
+        type: String
+    },
+
+    height: {
+        type: String
+    },
+
+    ratio: {
+        type: String
+    },
+
     createdAt: {
         type: Date,
         default: Date.now
