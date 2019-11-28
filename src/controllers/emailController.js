@@ -21,7 +21,7 @@ router.get('/novasenha/:email', async (req, res) => {
         port: 465,
         secure: true,
         auth: {
-            user: "grupomaislindodaetec@gmail.com",
+            user: "yourtalentapp@gmail.com",
             pass: "nataliaotaria123"
         },
         tls: { rejectUnauthorized: false }
