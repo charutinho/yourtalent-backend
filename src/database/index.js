@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //Conexão com mongodb
-const uri = 'mongodb://localhost/yourtalent'
+const uri = process.env.MONGO_URI
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
